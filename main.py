@@ -1,23 +1,17 @@
 #!/usr/bin/env python3
 
-import fire
+# import fire
 import json
 import os
 import numpy as np
 import tensorflow as tf
 
+import argparse
+
 import main.model as model, utilty.sample as sample, model.encoder as encoder
 
-def sample_model(
-    model_name='124M',
-    seed=None,
-    nsamples=0,
-    batch_size=1,
-    length=None,
-    temperature=1,
-    top_k=0,
-    top_p=1,
-    models_dir='models',
+def main(
+    arg
 ):
     """
     Run the sample_model
@@ -76,5 +70,12 @@ def sample_model(
                 print(text)
 
 if __name__ == '__main__':
-    fire.Fire(sample_model)
-
+    args = argparse.ArgumentParser()()
+    args.add_argument('--model_name', type=str, default='124M', help='Which model to use')
+    args.add_argument('--seed', type=int, default=None, help='Integer seed for random number generators, fix seed to reproduce results')
+    args.add_argument('--nsamples', type=int, default=0, help='Number of samples to return, if 0, continues to generate samples indefinately.')
+    args.add_argument('--batch_size', type=int, default=1, help='Number of batches (only affects speed/memory).')
+    args.add_argument('--length', type=int, default=None, help='Number of tokens in generated text, if None (default), is determined by model hyperparameters')
+    args.add_argument('--temperature', type=float, default=1, help='Float value controlling randomness in boltzmann distribution. Lower temperature results in less random completions. As the  
+    
+    main(args)
